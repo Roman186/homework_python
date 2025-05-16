@@ -12,7 +12,8 @@ string_utils = StringUtils()
     ("h", "H"),
     ("Lesson", "Lesson"),
     ("hello-world", "Hello-world"),
-    ("123", "123")
+    ("123", "123"),
+    ("😁", "😁")
 ])
 def test_capitalize_positive(input_str, expected):
     assert string_utils.capitalize(input_str) == expected
@@ -25,7 +26,7 @@ def test_capitalize_positive(input_str, expected):
     (None, AttributeError),
     (True, AttributeError),
     ({}, AttributeError),
-    ((), AttributeError)
+    ((), AttributeError),
 ])
 def test_attribute_capitalize(input_str, expected):
     with pytest.raises(expected):
