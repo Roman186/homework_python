@@ -11,7 +11,7 @@ driver.get("https://bonigarcia.dev/selenium-webdriver-java/loading-images.html")
 LOCATOR_DONE = ("xpath", "//p[text()='Done!']")
 LOCATOR_ALL_IMG = ("tag name", "img")
 
-wait.until(EC.presence_of_all_elements_located(LOCATOR_DONE))
+wait.until(EC.visibility_of_element_located(LOCATOR_DONE))
 
 src_third_image = driver.find_elements(*LOCATOR_ALL_IMG)
 
