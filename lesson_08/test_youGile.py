@@ -4,7 +4,7 @@ from youGile import ProjectApi
 
 base_url = "https://yougile.com/api-v2/projects/"
 # Вставить полученный токен
-token = ''
+token = 'S3ksC6H5TJIathUHpsE-bfP0ddrepRhs03whzbTSbEkvtmLstwLrhmRMpy+yil1g'
 my_headers = {'Authorization': f'Bearer {token}',
               'Content-Type': 'application/json'
               }
@@ -20,7 +20,7 @@ def add_project():
     }
     resp = requests.post(base_url, json=data, headers=my_headers)
     added_project = resp.json()
-    return added_project["id"]
+    return added_project
 
 
 @pytest.mark.positive
@@ -88,12 +88,15 @@ def test_empty_token():
 def test_change_project(add_project):
     main_page = ProjectApi(base_url, my_headers)
     changes_project = main_page.change_project(add_project)
+    check_title = main_page.get_project_by_id(add_project)
     assert changes_project.status_code == 200, \
         "Проект не удалось отредактировать"
-    assert changes_project.json()['id'] == add_project, \
-        "id измененного проекта != id изменяемого проекта"
+    assert changes_project.json()['id'] == add_project['id'], \
+        "id измененного проекта == id изменяемого проекта"
     assert isinstance(changes_project.json()['id'], str), \
         "Значение id не является строкой"
+    assert check_title.json()['title'] == 'Измененный проект', \
+        "title остался прежним при изменении проекта"
 
 
 @pytest.mark.negative
@@ -128,7 +131,7 @@ def test_get_project_by_id(add_project):
         "Проект по id не найден"
     assert 'id' in getting_project.json(), \
         "В ответе не возвращается id"
-    assert add_project == getting_project.json()['id'], \
+    assert add_project['id'] == getting_project.json()['id'], \
         "id в запросе == id в ответе"
     assert 'title' in getting_project.json(), \
         "В ответе не возвращается title проекта"

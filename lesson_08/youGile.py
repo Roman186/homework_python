@@ -6,7 +6,7 @@ class ProjectApi:
         self.base_url = base_url
         self.my_headers = my_headers
         # Вставить полученный токен
-        self.token = ''
+        self.token = 'S3ksC6H5TJIathUHpsE-bfP0ddrepRhs03whzbTSbEkvtmLstwLrhmRMpy+yil1g'
 
     def ads_project(self, title):
         data = {
@@ -104,7 +104,7 @@ class ProjectApi:
                 "05b014a0-01bd-4e2e-bb8d-b0adf40683a1": "admin"
             }
         }
-        id_project = add_project
+        id_project = add_project['id']
         resp = requests.put(
             self.base_url + id_project, json=data_change,
             headers=self.my_headers)
@@ -146,14 +146,14 @@ class ProjectApi:
                 "05b014a0-01bd-4e2e-bb8d-b0adf40683a1": "admin"
             }
         }
-        id_project = project
+        id_project = project['id']
         resp = requests.post(
             self.base_url + id_project, json=data_change,
             headers=self.my_headers)
         return resp
 
     def get_project_by_id(self, project):
-        searched_id = project
+        searched_id = project['id']
         resp = requests.get(
             self.base_url + searched_id, headers=self.my_headers)
         return resp
