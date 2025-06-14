@@ -6,7 +6,7 @@ class ProjectApi:
         self.base_url = base_url
         self.my_headers = my_headers
         # Вставить полученный токен
-        self.token = 'S3ksC6H5TJIathUHpsE-bfP0ddrepRhs03whzbTSbEkvtmLstwLrhmRMpy+yil1g'
+        self.token = ''
 
     def ads_project(self, title):
         data = {
