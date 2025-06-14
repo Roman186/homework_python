@@ -4,7 +4,7 @@ from youGile import ProjectApi
 
 base_url = "https://yougile.com/api-v2/projects/"
 # Вставить полученный токен
-token = 'S3ksC6H5TJIathUHpsE-bfP0ddrepRhs03whzbTSbEkvtmLstwLrhmRMpy+yil1g'
+token = ''
 my_headers = {'Authorization': f'Bearer {token}',
               'Content-Type': 'application/json'
               }
