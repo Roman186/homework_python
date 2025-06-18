@@ -2,7 +2,7 @@ from sqlalchemy import create_engine, inspect, text
 import psycopg2
 
 
-class CustomersTable:
+class SubjectTable:
 
     def __init__(self, connection_string):
         self.db = create_engine(connection_string)
@@ -13,22 +13,13 @@ class CustomersTable:
 
         return names_tables
 
-    def select_from_table(self):
-        connection = self.db.connect()
-        result = connection.execute(text("SELECT * FROM customers"))
-        rows = result.mappings().all()
-
-        connection.close()
-
-        return rows
-
-    def select_one_filters(self, id_custom):
+    def select_one_filters(self, subj_id):
         connection = self.db.connect()
         sql_statement = text(
-            "SELECT customer_nm FROM customers \
-             WHERE customer_id = :id_customer")
+            "SELECT subject_title FROM subject \
+             WHERE subject_id = :id_subj")
         result = connection.execute(
-            sql_statement, {"id_customer": f"{id_custom}"})
+            sql_statement, {"id_subj": f"{subj_id}"})
         rows = result.mappings().all()
 
         return rows
@@ -36,22 +27,22 @@ class CustomersTable:
     def select_order_by_desc_id(self):
         connection = self.db.connect()
         result = connection.execute(text(
-            "SELECT * FROM customers ORDER BY customer_id DESC"))
+            "SELECT * FROM subject ORDER BY subject_id DESC"))
         rows = result.mappings().all()
 
         connection.close()
 
         return rows[0]
 
-    def insert_in_table(self, custom_id, custom_nm):
+    def insert_in_table(self, subject_id, subject):
         connection = self.db.connect()
         transaction = connection.begin()
 
         sql = text(
-            "INSERT INTO customers(customer_id, customer_nm) \
-             VALUES (:new_id, :new_name)")
-        connection.execute(sql, {"new_id": f"{custom_id}",
-                                 "new_name": f"{custom_nm}"})
+            "INSERT INTO subject(subject_id, subject_title) \
+             VALUES (:new_id, :new_subject)")
+        connection.execute(sql, {"new_id": f"{subject_id}",
+                                 "new_subject": f"{subject}"})
 
         transaction.commit()
         connection.close()
@@ -61,21 +52,21 @@ class CustomersTable:
         transaction = connection.begin()
 
         sql = text(
-            "UPDATE customers SET customer_nm = :nm_customer \
-             WHERE customer_id = :id")
+            "UPDATE subject SET subject_title = :subj_title \
+             WHERE subject_id = :id")
         connection.execute(
-            sql, {"nm_customer": "changed customer",
-                                 "id": 99999})
+            sql, {"subj_title": "Update language",
+                  "id": 99999})
 
         transaction.commit()
         connection.close()
 
-    def delete_subject(self, id_number):
+    def delete_subject(self, id_num):
         connection = self.db.connect()
         transaction = connection.begin()
 
-        sql = text("DELETE FROM customers WHERE customer_id = :id")
-        connection.execute(sql, {"id": f"{id_number}"})
+        sql = text("DELETE FROM subject WHERE subject_id = :id_subj")
+        connection.execute(sql, {"id_subj": f"{id_num}"})
 
         transaction.commit()
         connection.close()
