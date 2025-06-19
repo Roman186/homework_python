@@ -1,5 +1,5 @@
 import pytest
-from CustomersTable import SubjectTable
+from SubjectTable import SubjectTable
 
 # Необходимо внести свои данные для подключения
 db_connection_string = 'postgresql://myuser:mypassword@localhost:5432/postgres'
