@@ -1,5 +1,4 @@
 from sqlalchemy import create_engine, inspect, text
-import psycopg2
 
 
 class SubjectTable:
