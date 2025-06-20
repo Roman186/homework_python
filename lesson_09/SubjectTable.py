@@ -24,15 +24,13 @@ class SubjectTable:
 
         return rows
 
-    def select_order_by_desc_id(self):
+    def get_max_subject_id(self):
         connection = self.db.connect()
-        result = connection.execute(text(
-            "SELECT * FROM subject ORDER BY subject_id DESC"))
-        rows = result.mappings().all()
-
+        result = connection.execute(
+            text("SELECT MAX(subject_id) FROM subject"))
+        max_id = result.scalar() or 0
         connection.close()
-
-        return rows[0]
+        return max_id
 
     def insert_in_table(self, subject_id, subject):
         connection = self.db.connect()
@@ -47,7 +45,7 @@ class SubjectTable:
         transaction.commit()
         connection.close()
 
-    def update_subject(self):
+    def update_subject(self, subject_id, new_title):
         connection = self.db.connect()
         transaction = connection.begin()
 
@@ -55,8 +53,8 @@ class SubjectTable:
             "UPDATE subject SET subject_title = :subj_title \
              WHERE subject_id = :id")
         connection.execute(
-            sql, {"subj_title": "Update language",
-                  "id": 99999})
+            sql, {"subj_title": new_title,
+                  "id": subject_id})
 
         transaction.commit()
         connection.close()
