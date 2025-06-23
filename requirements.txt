@@ -2,3 +2,4 @@ pytest # Фреймворк для тестирования
 selenium # Работа с браузером
 requests # HTTP-запросы
 sqlalchemy # Работа с БД
+allure-pytest # Отчеты
